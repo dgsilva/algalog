@@ -1,23 +1,26 @@
 package com.algawork.api.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algawork.api.domain.modal.Cliente;
+import com.algawork.api.repositories.ClienteRepository;
 
 @RestController
+@RequestMapping("/api/clientes")
 public class ClienteController {
 
-	@GetMapping("/clientes")
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@GetMapping()
 	public List<Cliente>findAll(){
-		var cliente1 = new Cliente();
-		cliente1.setId(1L);
-		cliente1.setNome("Diego");
-		cliente1.setEmail("diegorj93@gmail.com");
-		cliente1.setTelefone("9999-9999");
-		return Arrays.asList(cliente1);
+	List<Cliente> list =  clienteRepository.findAll();
+	return list;
 	}
+	
 }
