@@ -14,34 +14,28 @@ import com.algawork.api.domain.modal.Cliente;
 import com.algawork.api.repositories.ClienteRepository;
 
 import lombok.AllArgsConstructor;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-	
 	private ClienteRepository clienteRepository;
-	
+
 	@GetMapping()
-	public List<Cliente>findAll(){
-	List<Cliente> list =  clienteRepository.findAll();
-	return list;
+	public List<Cliente> findAll() {
+		List<Cliente> list = clienteRepository.findAll();
+		return list;
 	}
-	
+
 	@GetMapping("/{clienteId}")
 	public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId) {
-		Optional<Cliente>cliente = clienteRepository.findById(clienteId);
-		 
-		if(cliente.isPresent()) {
-			return ResponseEntity.ok(cliente.get());
-		}
-		
-		return ResponseEntity.notFound().build();
+		return clienteRepository.findById(clienteId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	@GetMapping("/nome-por")
-	public List<Cliente>findAll(String nome){
-	List<Cliente> list =  clienteRepository.findByNome(nome);
-	return list;
+	public List<Cliente> findAll(String nome) {
+		List<Cliente> list = clienteRepository.findByNome(nome);
+		return list;
 	}
 }
