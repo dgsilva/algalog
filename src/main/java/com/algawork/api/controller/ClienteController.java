@@ -1,12 +1,12 @@
 package com.algawork.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping("/api/cliente")
 public class ClienteController {
 
 	private ClienteRepository clienteRepository;
@@ -37,5 +37,11 @@ public class ClienteController {
 	public List<Cliente> findAll(String nome) {
 		List<Cliente> list = clienteRepository.findByNome(nome);
 		return list;
+	}
+	
+	@PostMapping()
+	public Cliente save(@RequestBody Cliente cliente) {
+		Cliente clienteSave = clienteRepository.save(cliente);
+		return clienteSave;
 	}
 }
